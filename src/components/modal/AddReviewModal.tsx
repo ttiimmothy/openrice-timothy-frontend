@@ -5,7 +5,7 @@ import TextInput from "../Input/TextInput";
 import { TextareaInput } from "../Input/TextareaInput";
 import { useNavigate } from "react-router-dom";
 import FileInput from "../Input/FIleInput";
-// import { uploadImage } from "../../utils/imageService";
+import { uploadImage } from "../../utils/imageService";
 import NumberInput from "../Input/NumberInput";
 import { closeSnackbar, enqueueSnackbar } from "notistack";
 import { useSelector } from "react-redux";
@@ -46,7 +46,7 @@ const AddReviewModal: React.FC<AddReviewModalProps> = (
 
   const addReview = async (review: ReviewForm) => {
     if (user?.user_id) {
-      await postReview({
+      const res = await postReview({
         title: review.title,
         content: review.content,
         spending: review.spending,
@@ -55,18 +55,18 @@ const AddReviewModal: React.FC<AddReviewModalProps> = (
         user_id: user?.user_id,
         visit_date: new Date(review.visit_date),
       });
-      // await uploadImage(
-      //   review.photo,
-      //   props?.restaurant_id as string,
-      //   "reviews",
-      //   res.review_id
-      // );
-      // await uploadImage(
-      //   review.photo,
-      //   props?.restaurant_id as string,
-      //   "menus",
-      //   res.review_id
-      // );
+      await uploadImage(
+        review.photo,
+        props?.restaurant_id as string,
+        "reviews",
+        res.review_id
+      );
+      await uploadImage(
+        review.photo,
+        props?.restaurant_id as string,
+        "menus",
+        res.review_id
+      );
       enqueueSnackbar("Review added successfully", { variant: "success" });
       setTimeout(() => {
         navigate(`/restaurant/${props?.restaurant_id}`);
