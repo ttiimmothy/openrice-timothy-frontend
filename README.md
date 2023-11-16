@@ -1,7 +1,7 @@
 # Openrice Timothy Frontend
-[![ci](https://github.com/ttiimmothy/openrice-timothy-canada/actions/workflows/ci.yml/badge.svg)](https://github.com/ttiimmothy/openrice-timothy-canada/actions/workflows/ci.yml)
-[![cd](https://github.com/ttiimmothy/openrice-timothy-canada/actions/workflows/cd.yml/badge.svg)](https://github.com/ttiimmothy/openrice-timothy-canada/actions/workflows/cd.yml)
-[![pages-build-deployment](https://github.com/ttiimmothy/openrice-timothy-canada/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/ttiimmothy/openrice-timothy-canada/actions/workflows/pages/pages-build-deployment)
+[![ci](https://github.com/ttiimmothy/openrice-timothy-frontend/actions/workflows/ci.yml/badge.svg)](https://github.com/ttiimmothy/openrice-timothy-frontend/actions/workflows/ci.yml)
+[![cd](https://github.com/ttiimmothy/openrice-timothy-frontend/actions/workflows/cd.yml/badge.svg)](https://github.com/ttiimmothy/openrice-timothy-frontend/actions/workflows/cd.yml)
+[![pages-build-deployment](https://github.com/ttiimmothy/openrice-timothy-frontend/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/ttiimmothy/openrice-timothy-frontend/actions/workflows/pages/pages-build-deployment)
 
 Openrice Timothy Frontend is a restaurant recommendation website using `React` and `Tailwind CSS`
 
