@@ -1,0 +1,19 @@
+{
+  "cSpell.words": [
+    "Chatbubble",
+    "datepicker",
+    "Iiwicm",
+    "Indya",
+    "mapbox",
+    "notistack",
+    "Nsenph",
+    "Openrice",
+    "paymentmethod",
+    "reduxjs",
+    "supabase",
+    "tailwindcss"
+  ],
+  "files.associations": {
+    "*.css": "tailwindcss"
+  }
+}
