@@ -3,6 +3,7 @@ import { Restaurant } from "../../api/restaurant/RestaurantType";
 import { IoLocation, IoReorderThree, IoRestaurant } from "react-icons/io5";
 
 const RestaurantCard: React.FC<Restaurant> = (props: Restaurant) => {
+  console.log(process.env.REACT_APP_IMAGE_PREFIX);
   const RestaurantRow = ({
     text,
     icon,
