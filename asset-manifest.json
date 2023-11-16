@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/openrice-timothy-frontend/static/css/main.0e06dfeb.css",
+    "main.js": "/openrice-timothy-frontend/static/js/main.3e15a93f.js",
+    "index.html": "/openrice-timothy-frontend/index.html",
+    "main.0e06dfeb.css.map": "/openrice-timothy-frontend/static/css/main.0e06dfeb.css.map",
+    "main.3e15a93f.js.map": "/openrice-timothy-frontend/static/js/main.3e15a93f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0e06dfeb.css",
+    "static/js/main.3e15a93f.js"
+  ]
+}
