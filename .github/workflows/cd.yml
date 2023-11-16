@@ -21,7 +21,7 @@ jobs:
           REACT_APP_MAPBOX_TOKEN: ${{ secrets.REACT_APP_MAPBOX_TOKEN }}
           REACT_APP_IMAGE_PREFIX: ${{ secrets.REACT_APP_IMAGE_PREFIX }}
           REACT_APP_SUPABASE_BUCKET_PATH: ${{ secrets.REACT_APP_SUPABASE_BUCKET_PATH }}
-          REACT_APP_SUPABASE_SECRET_API_KEY: ${{ secrets.SUPABASE_SECRET_API_KEY }}
+          REACT_APP_SUPABASE_SECRET_API_KEY: ${{ secrets.REACT_APP_SUPABASE_SECRET_API_KEY }}
         run: |
           npm ci --legacy-peer-deps
           npm run build
