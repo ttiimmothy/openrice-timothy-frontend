@@ -1,20 +1,16 @@
 import { AxiosApiClientBuilder } from "../axiosIndex";
-import { User, AuthenticateResponse } from "./authType";
+import { Auth, AuthenticateResponse } from "./authType";
 
 const apiClient = new AxiosApiClientBuilder()
   .withResourceName("/auth/user")
   .withCredentials(true)
   .build();
 
-export const postUserRegister = async (
-  user: User
-): Promise<AuthenticateResponse> => {
+export const register = async (user: Auth): Promise<AuthenticateResponse> => {
   return apiClient.post("/register", user);
 };
 
-export const postUserAuth = async (
-  user: User
-): Promise<AuthenticateResponse> => {
+export const login = async (user: Auth): Promise<AuthenticateResponse> => {
   return apiClient.post("/login", user);
 };
 

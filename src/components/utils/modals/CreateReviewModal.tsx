@@ -1,38 +1,40 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
 import { IoClose } from "react-icons/io5";
-import TextInput from "../Input/TextInput";
-import { TextareaInput } from "../Input/TextareaInput";
-import { useNavigate } from "react-router-dom";
-import FileInput from "../Input/FIleInput";
-import { uploadImage } from "../../utils/imageService";
-import NumberInput from "../Input/NumberInput";
 import { closeSnackbar, enqueueSnackbar } from "notistack";
-import { useSelector } from "react-redux";
-import { IRootState } from "../../store";
-import { postReview } from "../../api/review/reviewApiIndex";
 
-type AddReviewModalProps = {
-  isShown: boolean;
-  setIsShown: React.Dispatch<React.SetStateAction<boolean>>;
+import { AppDispatch, IRootState } from "../../../store";
+import { createReviewThunk } from "../../../redux/review/reviewSlice";
+import { createReview } from "../../../api/review/reviewApiIndex";
+import { uploadImage } from "../../../utils/uploadImageService";
+import { fileTypeToExtension } from "../../../utils/fileTypeToExtension";
+import TextInput from "../inputs/TextInput";
+import TextareaInput from "../inputs/TextareaInput";
+import NumberInput from "../inputs/NumberInput";
+import FileInput from "../inputs/FileInput";
+import DateInput from "../inputs/DateInput";
+
+interface CreateReviewModalProps {
+  show: boolean;
+  setShow: React.Dispatch<React.SetStateAction<boolean>>;
   formRef: React.MutableRefObject<HTMLDivElement | null>;
   restaurant_id?: string;
-};
+}
 
-export type ReviewForm = {
+export interface ReviewForm {
   rating: number;
   title: string;
   visit_date: string;
   content: string;
   spending: number;
   photo?: any;
-};
+}
 
-const AddReviewModal: React.FC<AddReviewModalProps> = (
-  props: AddReviewModalProps
-) => {
+const CreateReviewModal: React.FC<CreateReviewModalProps> = (props) => {
   const navigate = useNavigate();
-  const user = useSelector((state: IRootState) => state.auth.currentUser);
   const { control, handleSubmit } = useForm({
     defaultValues: {
       title: "",
@@ -44,43 +46,88 @@ const AddReviewModal: React.FC<AddReviewModalProps> = (
     } as ReviewForm,
   });
 
-  const addReview = async (review: ReviewForm) => {
-    if (user?.user_id) {
-      const res = await postReview({
-        title: review.title,
-        content: review.content,
-        spending: review.spending,
-        rating: review.rating,
-        restaurant_id: props?.restaurant_id as string,
-        user_id: user?.user_id,
-        visit_date: new Date(review.visit_date),
-      });
-      await uploadImage(
-        review.photo,
-        props?.restaurant_id as string,
-        "reviews",
-        res.review_id
-      );
-      await uploadImage(
-        review.photo,
-        props?.restaurant_id as string,
-        "menus",
-        res.review_id
-      );
-      enqueueSnackbar("Review added successfully", { variant: "success" });
-      setTimeout(() => {
-        navigate(`/restaurant/${props?.restaurant_id}`);
-        navigate(0);
-      }, 1000);
+  const dispatch = useDispatch<AppDispatch>();
+  const user = useSelector((state: IRootState) => state.auth.currentUser);
 
-      setTimeout(() => {
-        closeSnackbar();
-      }, 2000);
-    }
-  };
+  const createNewReview = useCallback(
+    async (review: ReviewForm) => {
+      if (user?.user_id) {
+        if (review.photo) {
+          const res = await createReview(
+            {
+              title: review.title,
+              content: review.content,
+              spending: review.spending,
+              rating: review.rating,
+              restaurant_id: props?.restaurant_id as string,
+              user_id: user?.user_id,
+              visit_date: new Date(review.visit_date),
+            },
+            props.restaurant_id as string,
+            "Review",
+            fileTypeToExtension[review.photo?.type]
+          );
 
-  if (!props.isShown) return null;
-  return (
+          await uploadImage(
+            review.photo,
+            props.restaurant_id as string,
+            "photos",
+            res?.review_id,
+            "",
+            fileTypeToExtension[review.photo.type]
+          );
+
+          enqueueSnackbar("Review and Review photo are added successfully", {
+            variant: "success",
+          });
+        } else {
+          dispatch(
+            createReviewThunk({
+              review: {
+                title: review.title,
+                content: review.content,
+                spending: review.spending,
+                rating: review.rating,
+                restaurant_id: props?.restaurant_id as string,
+                user_id: user?.user_id,
+                visit_date: new Date(review.visit_date),
+              },
+              restaurantID: props.restaurant_id as string,
+              photoCategory: "Review",
+            })
+          );
+
+          enqueueSnackbar("Review is added successfully", {
+            variant: "success",
+          });
+        }
+
+        props.setShow(false);
+        setTimeout(() => {
+          navigate(`/restaurant/id/${props?.restaurant_id}`);
+          navigate(0);
+        }, 1000);
+
+        setTimeout(() => {
+          closeSnackbar();
+        }, 2000);
+      } else {
+        enqueueSnackbar("You haven't login yet", { variant: "error" });
+        props.setShow(false);
+        setTimeout(() => {
+          navigate(`/restaurant/id/${props?.restaurant_id}`);
+          navigate(0);
+        }, 1000);
+
+        setTimeout(() => {
+          closeSnackbar();
+        }, 2000);
+      }
+    },
+    [navigate, user?.user_id, props, dispatch]
+  );
+
+  return props.show ? (
     <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
       <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
       <div className="relative w-1/4 min-w-[400px] my-6 mx-auto z-40">
@@ -89,10 +136,10 @@ const AddReviewModal: React.FC<AddReviewModalProps> = (
           ref={props.formRef}
         >
           <div className="flex items-center justify-between p-2 px-4 border-b border-solid border-slate-200 rounded-t">
-            <h3 className="text-lg font-semibold">Add Review</h3>
+            <h3 className="text-lg font-semibold">Create New Review</h3>
             <button
               className="p-2 ml-auto text-black float-right text-3xl leading-none font-semibold outline-none rounded-full hover:bg-gray-200 focus:outline-none"
-              onClick={() => props.setIsShown(false)}
+              onClick={() => props.setShow(false)}
             >
               <span className="bg-transparent text-black text-2xl block outline-none focus:outline-none">
                 <IoClose size={20} />
@@ -102,7 +149,7 @@ const AddReviewModal: React.FC<AddReviewModalProps> = (
           <div className="relative p-6 flex flex-col items-center gap-6 overflow-auto">
             <form
               className="w-full gap-2 flex flex-col"
-              onSubmit={handleSubmit((review) => addReview(review))}
+              onSubmit={handleSubmit((review) => createNewReview(review))}
             >
               <Controller
                 control={control}
@@ -165,7 +212,7 @@ const AddReviewModal: React.FC<AddReviewModalProps> = (
                 control={control}
                 name="visit_date"
                 render={({ field }) => (
-                  <TextInput
+                  <DateInput
                     value={field.value}
                     onChange={field.onChange}
                     label="Visit Date"
@@ -179,15 +226,13 @@ const AddReviewModal: React.FC<AddReviewModalProps> = (
                 name="photo"
                 render={({ field }) => (
                   <FileInput
-                    // value={field.value}
                     onChange={(e) => {
                       if (e.target.files) {
                         const selectedFile = e.target.files[0];
                         field.onChange(selectedFile);
-                        2;
                       }
                     }}
-                    label="Visit Date"
+                    label="Upload Photo"
                     type="file"
                     className="form-control"
                     placeholder=""
@@ -205,7 +250,9 @@ const AddReviewModal: React.FC<AddReviewModalProps> = (
         </div>
       </div>
     </div>
+  ) : (
+    <></>
   );
 };
 
-export default AddReviewModal;
+export default CreateReviewModal;

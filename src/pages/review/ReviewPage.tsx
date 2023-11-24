@@ -10,7 +10,8 @@ import {
 import { format } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, IRootState } from "../../store";
-import { getReviewThunk } from "../../redux/reviews/reviewsSlice";
+import { getReviewThunk } from "../../redux/review/reviewSlice";
+import { getRestaurantThunk } from "../../redux/restaurant/restaurantSlice";
 
 function isUUID(id: string) {
   const uuidPattern =
@@ -30,20 +31,35 @@ const ReviewPage: React.FC = () => {
 
   const dispatch = useDispatch<AppDispatch>();
   const review = useSelector((state: IRootState) => state.review.review);
+  const restaurant = useSelector(
+    (state: IRootState) => state.restaurant.restaurant
+  );
 
   useEffect(() => {
-    const fetchReview = async () => {
+    const fetchReview = () => {
       if (!id || !isUUID(id)) return;
       dispatch(getReviewThunk(id));
     };
+
     fetchReview();
   }, [id, dispatch]);
+
+  useEffect(() => {
+    const fetchRestaurant = () => {
+      if (!id || !isUUID(id)) return;
+      if (review?.restaurant_id) {
+        dispatch(getRestaurantThunk(review.restaurant_id));
+      }
+    };
+
+    fetchRestaurant();
+  }, [dispatch, review, id]);
 
   return (
     <div className="container justify-center mb-8 px-4 gap-8 mx-auto mt-10">
       <div className="relative">
         <img
-          src={`${process.env.REACT_APP_IMAGE_PREFIX}/coverImageUrl/${review?.restaurant_id}.jpg`}
+          src={restaurant?.cover_image_url}
           alt="hero"
           className="w-full h-80 object-cover rounded-lg mb-4 grayscale-[50%]"
         />
@@ -51,8 +67,8 @@ const ReviewPage: React.FC = () => {
           {review?.restaurantName}
         </p>
       </div>
-      <div className="container justify-center mb-8 grid grid-cols-1 gap-8 mx-auto sm:grid-cols-1 md:grid-cols-3 mt-10">
-        <div className="col-span-2 rounded-md shadow-md">
+      <div className="justify-center mb-8 grid grid-cols-1 gap-8 mx-auto md:grid-cols-3 mt-10">
+        <div className="col-span-2 rounded-md shadow-md h-80">
           {review && (
             <h1 className="font-bold text-4xl text-center pt-70">
               {review.title}
@@ -69,11 +85,21 @@ const ReviewPage: React.FC = () => {
                   }
                   icon={<IoTime />}
                 />
+                {review.photo && (
+                  <div className="h-40">
+                    <div className="mb-1">Photos</div>
+                    <img
+                      src={review.photo}
+                      alt="review photo"
+                      className="object-cover h-[100%] w-auto rounded-md"
+                    />
+                  </div>
+                )}
               </div>
             )}
           </div>
         </div>
-        <div className="p-4 col-span-2 h-fit rounded-md shadow-md md:col-span-1">
+        <div className="p-4 col-span-2 rounded-md shadow-md md:col-span-1">
           {review && (
             <>
               <h5 className="border-b border-orange-500 my-2 text-lg">User</h5>
