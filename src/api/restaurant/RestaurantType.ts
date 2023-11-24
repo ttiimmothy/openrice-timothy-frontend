@@ -1,18 +1,37 @@
+export interface Restaurant {
+  restaurant_id: string;
+  name: string;
+  address: string;
+  district_id: string;
+  latitude: string;
+  longitude: string;
+  postal_code: string;
+  phone: string;
+  intro: string;
+  opening_hours: string;
+  cover_image_url?: string;
+  averageRating: number;
+  reviewCount: number;
+  active: boolean;
+  created_at: Date;
+  modified_at: Date;
+}
+
 export type SearchRestaurantQuery = {
   name?: string;
   limit?: number;
   offset?: number;
 };
 
-export type Restaurant = {
+export type CreateRestaurantType = {
+  name: string;
   address: string;
+  district_id: string;
   latitude: string;
   longitude: string;
-  created_at?: string;
-  district_id: string;
+  postal_code: string;
+  phone: string;
   intro: string;
-  modified_at?: string;
-  name: string;
   opening_hours:
     | {
         monday: { from: string; to: string };
@@ -25,19 +44,8 @@ export type Restaurant = {
         holiday?: { from: string; to: string };
       }
     | string;
-  phone: string;
-  postal_code: string;
-  restaurant_id?: string;
+  cover_image_url?: string;
   rating?: number;
-  coverImageUrl?: string;
-};
-
-export type RestaurantDish = {
-  restaurant_id: string;
-  dish_id: string;
-};
-
-export type RestaurantPaymentMethod = {
-  restaurant_id: string;
-  payment_method_id: string;
+  created_at?: string;
+  modified_at?: string;
 };
