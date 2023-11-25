@@ -16,6 +16,15 @@ export default {
           900: "#001933",
         },
       },
+      borderWidth: {
+        1: "1px",
+      },
+      width: {
+        120: "30rem",
+      },
+      minWidth: {
+        36: "9rem",
+      },
     },
   },
   plugins: [],
