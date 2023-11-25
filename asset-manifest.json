@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/openrice-timothy-frontend/static/css/main.a589114f.css",
-    "main.js": "/openrice-timothy-frontend/static/js/main.b7e859d1.js",
+    "main.css": "/openrice-timothy-frontend/static/css/main.773f07db.css",
+    "main.js": "/openrice-timothy-frontend/static/js/main.6a919f17.js",
     "index.html": "/openrice-timothy-frontend/index.html",
-    "main.a589114f.css.map": "/openrice-timothy-frontend/static/css/main.a589114f.css.map",
-    "main.b7e859d1.js.map": "/openrice-timothy-frontend/static/js/main.b7e859d1.js.map"
+    "main.773f07db.css.map": "/openrice-timothy-frontend/static/css/main.773f07db.css.map",
+    "main.6a919f17.js.map": "/openrice-timothy-frontend/static/js/main.6a919f17.js.map"
   },
   "entrypoints": [
-    "static/css/main.a589114f.css",
-    "static/js/main.b7e859d1.js"
+    "static/css/main.773f07db.css",
+    "static/js/main.6a919f17.js"
   ]
 }
