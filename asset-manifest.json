@@ -1,13 +1,16 @@
 {
   "files": {
-    "main.css": "/openrice-timothy-frontend/static/css/main.820f3847.css",
-    "main.js": "/openrice-timothy-frontend/static/js/main.a248a570.js",
+    "main.css": "/openrice-timothy-frontend/static/css/main.89cdee30.css",
+    "main.js": "/openrice-timothy-frontend/static/js/main.c438d3ee.js",
+    "static/media/error.svg": "/openrice-timothy-frontend/static/media/error.16431288f25607e5853786f01df3d746.svg",
+    "static/media/restaurant_empty.jpg": "/openrice-timothy-frontend/static/media/restaurant_empty.65e0f71252e5d9a0cd46.jpg",
+    "static/media/primevue.svg": "/openrice-timothy-frontend/static/media/primevue.3d0728e51c81cd61efd31d078a392de5.svg",
     "index.html": "/openrice-timothy-frontend/index.html",
-    "main.820f3847.css.map": "/openrice-timothy-frontend/static/css/main.820f3847.css.map",
-    "main.a248a570.js.map": "/openrice-timothy-frontend/static/js/main.a248a570.js.map"
+    "main.89cdee30.css.map": "/openrice-timothy-frontend/static/css/main.89cdee30.css.map",
+    "main.c438d3ee.js.map": "/openrice-timothy-frontend/static/js/main.c438d3ee.js.map"
   },
   "entrypoints": [
-    "static/css/main.820f3847.css",
-    "static/js/main.a248a570.js"
+    "static/css/main.89cdee30.css",
+    "static/js/main.c438d3ee.js"
   ]
 }
