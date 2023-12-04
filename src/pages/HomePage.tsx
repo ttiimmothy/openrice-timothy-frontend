@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { AppDispatch, IRootState } from "../../store";
-import { getRestaurantsByQueryThunk } from "../../redux/restaurant/restaurantSlice";
-import RestaurantCardSkeletonLoader from "../../components/skeletonLoader/RestaurantCardSkeletonLoader";
-import RestaurantCard from "../../components/utils/cards/RestaurantCard";
-import SearchInput from "../../components/utils/inputs/SearchInput";
+import { AppDispatch, IRootState } from "../store";
+import { getRestaurantsByQueryThunk } from "../redux/restaurant/restaurantSlice";
+import RestaurantCardSkeletonLoader from "../components/skeletonLoader/RestaurantCardSkeletonLoader";
+import RestaurantCard from "../components/utils/cards/RestaurantCard";
+import SearchInput from "../components/utils/inputs/SearchInput";
 
 export default function HomePage(): JSX.Element {
   const [loading, setLoading] = useState(true);

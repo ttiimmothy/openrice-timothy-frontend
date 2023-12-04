@@ -11,14 +11,14 @@ import { fileTypeToExtension } from "../../../utils/fileTypeToExtension";
 import { uploadImage } from "../../../utils/uploadImageService";
 import FileInput from "../inputs/FileInput";
 
-interface UploadImageModalProps {
+interface UploadMenuImageModalProps {
   show: boolean;
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
   modalRef: React.MutableRefObject<HTMLDivElement | null>;
   restaurant_id?: string;
 }
 
-const UploadImageModal: React.FC<UploadImageModalProps> = ({
+const UploadMenuImageModal: React.FC<UploadMenuImageModalProps> = ({
   show,
   setShow,
   modalRef,
@@ -51,16 +51,14 @@ const UploadImageModal: React.FC<UploadImageModalProps> = ({
   };
 
   const uploadMenuPhoto = async () => {
-    let imageName;
     if (user?.user_id) {
       if (image && image?.type) {
         const randomID = uuid();
-        imageName = `${randomID}.${fileTypeToExtension[image?.type]}`;
 
         dispatch(
           createMenuPhotoThunk({
             restaurantID: restaurant_id as string,
-            imageName,
+            imageName: `${randomID}.${fileTypeToExtension[image?.type]}`,
             photoCategory: "Menu",
           })
         );
@@ -68,8 +66,8 @@ const UploadImageModal: React.FC<UploadImageModalProps> = ({
           image as File,
           restaurant_id as string,
           "menus",
-          "",
-          imageName
+          randomID,
+          fileTypeToExtension[image?.type]
         );
 
         enqueueSnackbar("Menu photo is added successfully", {
@@ -80,10 +78,6 @@ const UploadImageModal: React.FC<UploadImageModalProps> = ({
           navigate(`/restaurant/id/${restaurant_id}`);
           navigate(0);
         }, 1000);
-
-        setTimeout(() => {
-          closeSnackbar();
-        }, 2000);
       }
     } else {
       enqueueSnackbar("You haven't login yet", { variant: "error" });
@@ -92,11 +86,11 @@ const UploadImageModal: React.FC<UploadImageModalProps> = ({
         navigate(`/restaurant/id/${restaurant_id}`);
         navigate(0);
       }, 1000);
-
-      setTimeout(() => {
-        closeSnackbar();
-      }, 2000);
     }
+
+    setTimeout(() => {
+      closeSnackbar();
+    }, 2000);
   };
 
   return show ? (
@@ -157,4 +151,4 @@ const UploadImageModal: React.FC<UploadImageModalProps> = ({
   );
 };
 
-export default UploadImageModal;
+export default UploadMenuImageModal;
