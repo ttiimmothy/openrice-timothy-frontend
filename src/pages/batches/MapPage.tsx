@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { getRestaurantsByQueryThunk } from "../../redux/restaurant/restaurantSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, IRootState } from "../../store";
+import { getRestaurantsByQueryThunk } from "../../redux/restaurant/restaurantSlice";
 import MapComponent from "../../components/map/MapComponent";
 
 const MapPage = () => {
