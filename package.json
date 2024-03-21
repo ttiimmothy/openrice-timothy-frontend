@@ -1,8 +1,8 @@
 {
   "name": "openrice_timothy_frontend",
   "private": true,
-  "version": "0.1.0",
-  "homepage": "https://ttiimmothy.github.io/openrice-timothy-frontend",
+  "version": "0.0.0",
+  "homepage": "https://openricetimothyfrontend.vercel.app",
   "scripts": {
     "dev": "BROWSER=NONE PORT=3865 react-scripts start",
     "start": "BROWSER=NONE PORT=3870 react-scripts start",
